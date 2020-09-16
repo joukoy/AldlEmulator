@@ -20,7 +20,8 @@ namespace AldlEmulator
 
         private double afr = 14.7;
         byte[] emuBuff = { 0x80, 0x95, 0x1, 0x2, 0x27, 0x0, 0x0, 0x0, 0x0, 0x0, 0x60, 0x60, 0x1C, 0x0, 0x19, 0x94, 0x0, 0x20, 0xFF, 0x66, 0xE2, 0x80, 0x80, 0x1, 0x80, 0xA0, 0x80, 0xFF, 0xA0, 0x80, 0xA0, 0x4D, 0x33, 0x0, 0x0, 0x0, 0x79, 0x0, 0x5, 0x0, 0x3E, 0x0, 0x4F, 0x0, 0x33, 0x8, 0x0, 0x0, 0x0, 0x1, 0xEC, 0xEE, 0x8C, 0x0, 0x0, 0x0, 0x1, 0xD5, 0x6A, 0x60, 0x0, 0x5, 0x4, 0x6, 0x95, 0x80, 0x80, 0x1, 0x29, 0x80, 0x95, 0x1, 0x2, 0x27, 0x0, 0x0, 0x0, 0x0, 0x0, 0x60, 0x60, 0x1C, 0x0, 0x19, 0x94, 0x0, 0x20, 0xFF, 0x66, 0xE2, 0x80, 0x80, 0x1, 0x80, 0xA0, 0x80, 0xFF, 0xA0, 0x80, 0xA0, 0x4D, 0x33, 0x0, 0x0, 0x0, 0x79, 0x0, 0x5, 0x0, 0x3E, 0x0, 0x4F, 0x0, 0x33, 0x8, 0x0, 0x0, 0x0, 0x1, 0xEC, 0xEE, 0x8C, 0x0, 0x0, 0x0, 0x1, 0xD5, 0x6A, 0x60, 0x0, 0x5, 0x4, 0x6, 0x95 };
-
+        byte O2volts = 0;
+        bool O2increment = true;
         private void btnStart_Click(object sender, EventArgs e)
         {
             setAldlValues();
@@ -37,6 +38,7 @@ namespace AldlEmulator
             serialAem.Open();
 
             timerAem.Enabled = true;
+            timerO2.Enabled = true;
             btnStart.Enabled = false;
         }
 
@@ -85,19 +87,29 @@ namespace AldlEmulator
         {
             setAldlValues();
         }
+
+        private void calculateChecksum()
+        {
+            int cksum = 0;
+
+            int cksumPos = (int)numMsgSize.Value - 1;
+            for (int i = 0; i < cksumPos; i++)
+                cksum += emuBuff[i];
+            emuBuff[cksumPos] = (byte)((-cksum) & 0xff);
+        }
         private void setAldlValues()
         {
             emuBuff[10] = (byte)((double)(numCoolant.Value + 40) / 0.75);
             emuBuff[12] = (byte)((double)numThrottle.Value / 0.019608);
             emuBuff[13] = (byte)(numRPM.Value / 25);
             emuBuff[16] = (byte)numSpeed.Value;
+            emuBuff[36] = (byte)(numBattVolts.Value * 10);
+            int MAF = (int)((double)numMAF.Value / 0.003906);
+            emuBuff[38] = (byte)((MAF & 0xFF00) >> 8);
+            emuBuff[39] = (byte)((MAF & 0xFF));
             emuBuff[45] = (byte)numKnock.Value;
-            int cksum = 0;
 
-            int cksumPos = (int)numMsgSize.Value - 1; 
-            for (int i = 0; i < cksumPos; i++)
-                cksum += emuBuff[i];
-            emuBuff[cksumPos] = (byte)((-cksum) & 0xff);
+            calculateChecksum();
 
         }
 
@@ -120,6 +132,41 @@ namespace AldlEmulator
         }
 
         private void numKnock_ValueChanged(object sender, EventArgs e)
+        {
+            setAldlValues();
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timerO2_Tick(object sender, EventArgs e)
+        {
+            if (O2increment)
+            {
+                O2volts += 25;
+                if (O2volts > 200)
+                    O2increment = false;
+            }
+            else
+            {
+                O2volts -=25;
+                if (O2volts < 50)
+                    O2increment = true;
+            }
+            emuBuff[19] = O2volts;
+            calculateChecksum();
+        }
+
+        private void numBattVolts_ValueChanged(object sender, EventArgs e)
+        {
+            setAldlValues();
+
+        }
+
+        private void numMAF_ValueChanged(object sender, EventArgs e)
         {
             setAldlValues();
 

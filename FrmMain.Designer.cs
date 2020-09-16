@@ -50,12 +50,19 @@
             this.label8 = new System.Windows.Forms.Label();
             this.numMsgSize = new System.Windows.Forms.NumericUpDown();
             this.chkEcho = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numBattVolts = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numMAF = new System.Windows.Forms.NumericUpDown();
+            this.timerO2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numThrottle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoolant)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKnock)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMsgSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBattVolts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMAF)).BeginInit();
             this.SuspendLayout();
             // 
             // serialAldl
@@ -290,11 +297,80 @@
             this.chkEcho.Text = "RS232 Echo";
             this.chkEcho.UseVisualStyleBackColor = true;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(14, 140);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(51, 13);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "Batt volts";
+            // 
+            // numBattVolts
+            // 
+            this.numBattVolts.DecimalPlaces = 1;
+            this.numBattVolts.Location = new System.Drawing.Point(177, 140);
+            this.numBattVolts.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.numBattVolts.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numBattVolts.Name = "numBattVolts";
+            this.numBattVolts.Size = new System.Drawing.Size(120, 20);
+            this.numBattVolts.TabIndex = 19;
+            this.numBattVolts.Value = new decimal(new int[] {
+            14,
+            0,
+            0,
+            0});
+            this.numBattVolts.ValueChanged += new System.EventHandler(this.numBattVolts_ValueChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(14, 168);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(48, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "MAF g/s";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // numMAF
+            // 
+            this.numMAF.Location = new System.Drawing.Point(176, 166);
+            this.numMAF.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numMAF.Name = "numMAF";
+            this.numMAF.Size = new System.Drawing.Size(120, 20);
+            this.numMAF.TabIndex = 21;
+            this.numMAF.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.numMAF.ValueChanged += new System.EventHandler(this.numMAF_ValueChanged);
+            // 
+            // timerO2
+            // 
+            this.timerO2.Tick += new System.EventHandler(this.timerO2_Tick);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(543, 150);
+            this.ClientSize = new System.Drawing.Size(543, 199);
+            this.Controls.Add(this.numMAF);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.numBattVolts);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.chkEcho);
             this.Controls.Add(this.numMsgSize);
             this.Controls.Add(this.label8);
@@ -322,6 +398,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numCoolant)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKnock)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMsgSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBattVolts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMAF)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,6 +428,11 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numMsgSize;
         private System.Windows.Forms.CheckBox chkEcho;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown numBattVolts;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numMAF;
+        private System.Windows.Forms.Timer timerO2;
     }
 }
 
