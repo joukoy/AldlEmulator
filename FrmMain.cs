@@ -56,8 +56,9 @@ namespace AldlEmulator
 
             if (chkEcho.Checked)
                 serialAldl.Write(inbuf, 0, p);  //RS232 echo
-            if (inbuf[2] == 1)
+            if (inbuf[2] == 1)  //Mode byte
             {
+                emuBuff[0] = inbuf[0];  //Message ID
                 Application.DoEvents();
                 serialAldl.Write(emuBuff, 0, (int)numMsgSize.Value);
             }

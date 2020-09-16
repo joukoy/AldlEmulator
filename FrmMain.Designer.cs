@@ -100,7 +100,7 @@
             this.txtECMCom.Name = "txtECMCom";
             this.txtECMCom.Size = new System.Drawing.Size(100, 20);
             this.txtECMCom.TabIndex = 3;
-            this.txtECMCom.Text = "COM5";
+            this.txtECMCom.Text = "COM2";
             // 
             // txtAemCom
             // 
@@ -108,7 +108,7 @@
             this.txtAemCom.Name = "txtAemCom";
             this.txtAemCom.Size = new System.Drawing.Size(100, 20);
             this.txtAemCom.TabIndex = 4;
-            this.txtAemCom.Text = "COM7";
+            this.txtAemCom.Text = "COM4";
             // 
             // label3
             // 
@@ -123,7 +123,7 @@
             // 
             this.numSpeed.Location = new System.Drawing.Point(177, 8);
             this.numSpeed.Maximum = new decimal(new int[] {
-            400,
+            254,
             0,
             0,
             0});
@@ -155,7 +155,7 @@
             0});
             this.numRPM.Location = new System.Drawing.Point(177, 35);
             this.numRPM.Maximum = new decimal(new int[] {
-            10000,
+            6300,
             0,
             0,
             0});
@@ -246,6 +246,11 @@
             // numKnock
             // 
             this.numKnock.Location = new System.Drawing.Point(177, 113);
+            this.numKnock.Maximum = new decimal(new int[] {
+            254,
+            0,
+            0,
+            0});
             this.numKnock.Name = "numKnock";
             this.numKnock.Size = new System.Drawing.Size(120, 20);
             this.numKnock.TabIndex = 14;
